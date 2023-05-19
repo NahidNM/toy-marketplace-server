@@ -27,12 +27,21 @@ async function run() {
     await client.connect();
 
 const toyCollection = client.db('toyMarket').collection('myToys');
+const allToyCollection = client.db('toyMarket').collection('allToys');
 
 app.get('/myToys', async(req, res) =>{
 
     const cursor = toyCollection.find();
     const result = await cursor.toArray();
     res.send(result);
+})
+
+// All toy get data base
+app.get('/alltoys', async(req, res) =>{
+  const cursor = allToyCollection.find();
+  const result = await cursor.toArray();
+  console.log(result)
+  res.send(result)
 })
 
 
@@ -42,14 +51,6 @@ app.post('/addToys', async(req,  res) =>{
   const result = await toyCollection.insertOne(toydata);
   res.send(result)
 })
-
-
-// app.get('/addToyData', async(req, res) =>{
-//   const cursor = toyCollection.find();
-//   const result = await cursor.toArray()
-//   res.sendStatus(result)
-// })
-
 
 
     // Send a ping to confirm a successful connection
@@ -69,7 +70,7 @@ res.send("toy is running");
 });
 
 
-cvbn 
+
 app.listen(port, ()=>{
     console.log(`toy api is running on port : ${port}`)
 })
