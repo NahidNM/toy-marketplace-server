@@ -26,15 +26,15 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-const toyCollection = client.db('toyMarket').collection('myToys');
+// const toyCollection = client.db('toyMarket').collection('myToys');
 const allToyCollection = client.db('toyMarket').collection('allToys');
 
-app.get('/myToys', async(req, res) =>{
+// app.get('/myToys', async(req, res) =>{
 
-    const cursor = toyCollection.find();
-    const result = await cursor.toArray();
-    res.send(result);
-})
+//     const cursor = toyCollection.find();
+//     const result = await cursor.toArray();
+//     res.send(result);
+// })
 
 // All toy get data base
 app.get('/alltoys', async(req, res) =>{
@@ -48,10 +48,15 @@ app.get('/alltoys', async(req, res) =>{
 // Add toy data
 app.post('/addToys', async(req,  res) =>{
   const toydata = req.body;
-  const result = await toyCollection.insertOne(toydata);
+  const result = await allToyCollection.insertOne(toydata);
   res.send(result)
 })
 
+// Get add My toys
+app.get('/mytoys/:email', async(req, res)=>{
+  const result = await allToyCollection.find({email: req.params.email}).toArray()
+  res.send(result)
+})
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
