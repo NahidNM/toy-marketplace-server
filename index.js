@@ -38,6 +38,11 @@ app.get('/alltoys', async(req, res) =>{
   res.send(result)
 })
 
+// Get id 
+app.get('/alltoys/:id', async(req, res)=>{
+  const id = req.params.id;
+  console.log(id)
+})
 
 // Add toy data
 app.post('/addToys', async(req,  res) =>{
@@ -52,6 +57,8 @@ app.get('/mytoys/:email', async(req, res)=>{
   res.send(result)
 })
 
+
+
 // Delete My toys
 app.delete('/mytoys/:id', async (req, res) => {
   const id = req.params.id;
@@ -59,6 +66,9 @@ app.delete('/mytoys/:id', async (req, res) => {
   const result = await allToyCollection.deleteOne(query);
   res.send(result);
 })
+
+
+
 
 // Update My toys
 app.put('/mytoys/:id', async (req, res) => {
