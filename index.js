@@ -41,7 +41,11 @@ app.get('/alltoys', async(req, res) =>{
 // Get id 
 app.get('/alltoys/:id', async(req, res)=>{
   const id = req.params.id;
-  console.log(id)
+  const query ={_id: new ObjectId(id)}
+  const user = await allToyCollection.findOne(query)
+  console.log(user)
+  res.send(user)
+  
 })
 
 // Add toy data
