@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const app = express();
 const cors = require('cors');
@@ -29,12 +29,6 @@ async function run() {
 // const toyCollection = client.db('toyMarket').collection('myToys');
 const allToyCollection = client.db('toyMarket').collection('allToys');
 
-// app.get('/myToys', async(req, res) =>{
-
-//     const cursor = toyCollection.find();
-//     const result = await cursor.toArray();
-//     res.send(result);
-// })
 
 // All toy get data base
 app.get('/alltoys', async(req, res) =>{
@@ -63,6 +57,26 @@ app.delete('/mytoys/:id', async (req, res) => {
   const id = req.params.id;
   const query = { _id: new ObjectId(id) }
   const result = await allToyCollection.deleteOne(query);
+  res.send(result);
+})
+
+// Update My toys
+app.put('/mytoys/:id', async (req, res) => {
+  const id = req.params.id;
+  const filter = { _id: new ObjectId(id) };
+  const options = {upset: true };
+  const updatedMyToys = req.body;
+  
+  const updateDoc = {
+      $set: {
+          // status: updatedMyToys.status
+          name: updatedMyToys.name,
+          quantity: updatedMyToys.quantity,
+          price: updatedMyToys.price
+          
+      },
+  };
+  const result = await allToyCollection.updateOne(filter, updateDoc, options);
   res.send(result);
 })
 
