@@ -48,6 +48,12 @@ app.get('/alltoys/:id', async(req, res)=>{
   
 })
 
+// Get add My toys
+app.get('/mytoys/:email', async(req, res)=>{
+  const result = await allToyCollection.find({email: req.params.email}).toArray()
+  res.send(result)
+})
+
 // Add toy data
 app.post('/addToys', async(req,  res) =>{
   const toydata = req.body;
@@ -55,11 +61,7 @@ app.post('/addToys', async(req,  res) =>{
   res.send(result)
 })
 
-// Get add My toys
-app.get('/mytoys/:email', async(req, res)=>{
-  const result = await allToyCollection.find({email: req.params.email}).toArray()
-  res.send(result)
-})
+
 
 
 
@@ -86,7 +88,8 @@ app.put('/mytoys/:id', async (req, res) => {
           // status: updatedMyToys.status
           name: updatedMyToys.name,
           quantity: updatedMyToys.quantity,
-          price: updatedMyToys.price
+          price: updatedMyToys.price,
+          description: updatedMyToys.description
           
       },
   };
